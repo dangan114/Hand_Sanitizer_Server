@@ -3,8 +3,9 @@ const router = express.Router();
 const stations = require('../data/stations.json')
 const nodeMailer = require('../services/node_mailer')
 
+const fs = require('fs');
+
 router.get('/', (req, res) => {
-    console.log(stations.stations);
 
     var station = stations.stations.find(station => station.ip === req.ip)
 
@@ -16,5 +17,20 @@ router.get('/', (req, res) => {
         res.send("Email sent successfully!!!");
     }
 });
+
+router.post('/add', (req, res) => {
+    console.log(req)
+    var newStation = {
+        ip: req.ip,
+        station_id: req.body.station_id
+    }
+
+    stations.stations.push(newStation);
+    var json = JSON.stringify(stations);
+    fs.writeFile('./data/stations.json', json, function(err) {
+        if (err) throw err;
+        console.log('complete');
+    });  
+})
 
 module.exports = router; 
