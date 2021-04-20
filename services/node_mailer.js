@@ -10,8 +10,8 @@ module.exports = (text) => {
     })
     
     var mailOptions = {
-        from: 'dangphillip2003@gmail.com',
-        to: 'aibinhnguyen47@gmail.com',
+        from: process.env.EMAIL_USERNAME,
+        to: process.env.PRECIPIENT_EMAIL,
         subject: 'Sending email to node.js',
         text: text
     };
